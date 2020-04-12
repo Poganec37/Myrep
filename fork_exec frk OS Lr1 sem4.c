@@ -5,45 +5,35 @@
 #include<unistd.h>
 
 /*
-   format work is....     ./sort 80 10 -5 -890 0 
-	     * END of line=0, SORT BEFORE 0(NULL)
---------------------------------------	  
-  in: 	80 10 -5 -890
-  out: -890 -5 10 80  
+ Address to sort ==>  BUBsort.c
 */
 
 int main(int argc, char *argv[]) {  // argc of numbers;  argv of text
-   printf(" In FILE: \n");
-      int key[argc];   
-	
-    printf("In ARGC \n");
-	  for(int i=1; i<argc; i++){  // Mas[2]... Mas[N], N- the END of Mas
-	     key[i]=atoi(argv[i]); // DO atoi {text in numbers}
-		 printf("%d ",key[i]);
-	  }
-	  print("\n");
-	  
-	 printf("IN mas >> \n");
-	   for(int i=1; i<argc-1; i++){  // qual(argc-1): the END is NULL
-		 printf("%d ",key[i]);
-	  }
-	   int q;
-	  // SORT of Bubble
-	  for(int i=1; i<argc-1; i++){
-		  for(int j=1; j<argc-i-1; j++){
-			  if(key[j]>key[j+1]){
-				  q=key[j];
-				  key[j]=key[j+1];
-				  key[j+1]=q;
-			  }
-		  }
-	  }
-	   printf("\n");
-	   
-	    printf("OUT mas >> \n");
-	   for(int i=1; i<argc-1; i++){  // qual(argc-1): the END is NULL
-		 printf("%d ",key[i]);
-	  }
 
+   printf(" I am %d \n", (int)getpid());
+   
+     pid_t pid =fork();
+   printf(" FORK returned: %d \n", (int)pid);
+	  if(pid<0){
+	      perror("FORK failed");
+		  exit(1);
+	    }
+	  if(pid==0){
+		    // Child exec's
+			 char* args[]={"./sort", // name bubsort[bubsort.c=>> sort.c]
+				 "-3","24","5","-78","56","18","35","41","19","-896" // in SORT  +Write here
+				  "145","-956","95",  // in SORT
+				 "0",NULL   // not in SORT
+			 };
+			   execv(args[0],args);
+	    }
+		
+		  // Parent
+		  // Parent work here ..
+		 printf(" Parent work here \n");
+          // Parent wait Child
+        	printf("Parent wait Child \n");
+           wait(NULL);			
+		   
     return 0;	  
 }
