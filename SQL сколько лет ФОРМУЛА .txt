@@ -1,4 +1,0 @@
-SET @birthday = CAST('1992-04-10' AS DATE);
-SET @today = DATE(NOW());
-SELECT @birthday, @today, YEAR(@today), YEAR(@birthday), YEAR(@today)-YEAR(@birthday)-(IF(MONTH(@birthday) > MONTH(@today) OR 
-    (MONTH(@birthday) = MONTH(@today) AND DAY(@birthday) > DAY(@today)),1,0));
